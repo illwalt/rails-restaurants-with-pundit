@@ -15,10 +15,18 @@
     <% @restaurants.each do |restaurant| %>
       <tr>
         <td><%= restaurant.name %></td>
-        <td><%= restaurant.user %></td>
+        <td><%= restaurant.user.email %></td>
         <td><%= link_to 'Show', restaurant %></td>
-        <td><%= link_to 'Edit', edit_restaurant_path(restaurant) %></td>
-        <td><%= link_to 'Destroy', restaurant, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <% if policy(restaurant).edit? %>
+           <%= link_to 'Edit', edit_restaurant_path(restaurant) %>
+          <% end %>
+        </td>
+        <td>
+          <% if policy(restaurant).destroy? %>
+           <%= link_to 'Destroy', restaurant, method: :delete, data: { confirm: 'Are you sure?' } %>
+           <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
